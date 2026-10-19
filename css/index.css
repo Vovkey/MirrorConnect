@@ -9,11 +9,31 @@ body {
     overflow: hidden;
 }
 
-.card {
+.clock {
     position: absolute;
     width: 200px;
     height: 50px;
     background: #101010;
+    border: 4px solid blue;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.weather {
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    background: green;
+    border: 4px solid blue;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.calender {
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    background: skyblue;
     border: 4px solid blue;
     border-radius: 10px;
     cursor: pointer;

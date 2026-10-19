@@ -1,12 +1,22 @@
 const mouseDown = {
-  card0: false,
+  clock0: false,
+  weather0: false,
+  calender0: false,
 };
 
 const offset = {
-  card0: [
-    document.getElementById('card0').offsetWidth / 2,
-    document.getElementById('card0').offsetHeight / 2,
-  ]
+  clock0: [
+    document.getElementById('clock0').offsetWidth / 2,
+    document.getElementById('clock0').offsetHeight / 2,
+  ],
+  weather0: [
+    document.getElementById('weather0').offsetWidth / 2,
+    document.getElementById('weather0').offsetHeight / 2,
+  ],
+  calender0: [
+    document.getElementById('calender0').offsetWidth / 2,
+    document.getElementById('calender0').offsetHeight / 2,
+  ],
 };
 
 var mouseX, mouseY;
@@ -19,26 +29,57 @@ document.onmousemove = (e) => {
 window.nodeGrab = function(target) {
   switch (target) {
     case 0:
-      mouseDown.card0 = true;
+      mouseDown.clock0 = true;
       break;
+    case 1:
+      mouseDown.weather0 = true;
+      break
+    case 2:
+      mouseDown.calender0 = true;
+      break;
+
   }
 }
 
 window.nodeDrop = function(target) {
   switch (target) {
     case 0:
-      mouseDown.card0 = false;
+      mouseDown.clock0 = false;
+      break;
+    case 1:
+      mouseDown.weather0 = false;
+      break;
+    case 2:
+      mouseDown.calender0 = false;
       break;
   }
 }
 
-function updateCardPos() {
-  if (mouseDown.card0) {
-    card0.style.left = (mouseX - offset.card0[0]) + 'px';
-    card0.style.top = (mouseY - offset.card0[1]) + 'px';
+function updateClockPos() {
+  if (mouseDown.clock0) {
+    clock0.style.left = (mouseX - offset.clock0[0]) + 'px';
+    clock0.style.top = (mouseY - offset.clock0[1]) + 'px';
   }
-  requestAnimationFrame(updateCardPos);
+  requestAnimationFrame(updateClockPos);
 }
 
-requestAnimationFrame(updateCardPos);
+function updateWeatherPos() {
+  if (mouseDown.weather0) {
+    weather0.style.left = (mouseX - offset.weather0[0]) + 'px';
+    weather0.style.top = (mouseY - offset.weather0[1]) + 'px';
+  }
+  requestAnimationFrame(updateWeatherPos)
+}
+
+function updateCalenderPos() {
+  if (mouseDown.calender0) {
+    calender0.style.left = (mouseX - offset.calender0[0]) + 'px';
+    calender0.style.top = (mouseY - offset.calender0[1]) + 'px';
+  }
+  requestAnimationFrame(updateCalenderPos)
+}
+
+requestAnimationFrame(updateCalenderPos)
+requestAnimationFrame(updateClockPos);
+requestAnimationFrame(updateWeatherPos);
 //
