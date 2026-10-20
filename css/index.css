@@ -4,6 +4,10 @@
     margin: 0;
     padding: 0;
     font-family: 'Jost';
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 body {
@@ -13,10 +17,13 @@ body {
 
 .clock {
     color: white;
+    font-size: 70px;
     position: absolute;
-    width: 200px;
-    height: 50px;
-    background: #0d0d0d;
+    bottom: 15%;
+    left: 80%;
+    width: 300px;
+    height: 80px;
+    background: #000000;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -31,9 +38,11 @@ body {
 .weather{
     color: white;
     position: absolute;
+    top: 15%;
+    left: 70%;
     width: 200px;
     height: 50px;
-    background: #0d0d0d;
+    background: #000000;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -48,9 +57,11 @@ border: 2px dashed lightslategray;
 .calender {
     color: white;
     position: absolute;
+    top: 30%;
+    left: 50%;
     width: 200px;
     height: 50px;
-    background: #0d0d0d;
+    background: #000000;
     cursor: pointer;
     display: flex;
     align-items: center;
