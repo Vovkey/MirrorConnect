@@ -4,9 +4,6 @@
     margin: 0;
     padding: 0;
     font-family: 'Jost';
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
@@ -40,8 +37,8 @@ body {
     position: absolute;
     top: 15%;
     left: 70%;
-    width: 200px;
-    height: 50px;
+    width: 500px;
+    height: 150px;
     background: #000000;
     cursor: pointer;
     display: flex;
@@ -71,4 +68,69 @@ border: 2px dashed lightslategray;
 
 .calender:hover{
 border: 2px dashed lightslategray;
+}
+
+#weather-card {
+    background: #000000;
+    color: white;
+    padding: 24px;
+    width: 300px;
+}
+
+.weather-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.w-city {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+}
+
+.w-condition {
+    font-size: 13px;
+    color: #888888;
+    margin-top: 2px;
+}
+
+.w-icon {
+    font-size: 26px;
+}
+
+.w-temp {
+    font-size: 46px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin: 16px 0;
+}
+
+.w-forecast {
+    border-top: 1px solid #222222;
+    padding-top: 14px;
+    margin-top: 16px;
+}
+
+.forecast-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.forecast-day {
+    font-weight: 500;
+    width: 60px;
+}
+
+.forecast-temp-max {
+    color: #ffffff;
+}
+
+.forecast-temps-min {
+    color: #777777;
+    margin-left: 4px;
 }

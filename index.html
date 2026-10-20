@@ -11,13 +11,28 @@
     <div id="clock0" class="clock" onmousedown="nodeGrab(0)" onmouseup="nodeDrop(0)"></div>
 
 
-    <div id="weather0" class="weather" onmousedown="nodeGrab(1)" onmouseup="nodeDrop(1)">Weather</div>
+    <div id="weather0" class="weather" onmousedown="nodeGrab(1)" onmouseup="nodeDrop(1)">
+
+        <div id="weather-card">
+          <div class="weather-header">
+            <div>
+              <div class="w-city" id="w-city">Loading...</div>
+              <div class="w-condition" id="w-condition">--</div>
+            </div>
+            <div class="w-icon" id="w-icon">☀️</div>
+          </div>
+
+          <div class="w-temp" id="w-temp">--°C</div>
+
+          <div class="w-forecast" id="w-forecast"></div>
+        </div>
+
+    </div>
 
 
     <div id="calender0" class="calender" onmousedown="nodeGrab(2)" onmouseup="nodeDrop(2)">Calendar</div>
 
 
-    <div id="JFWebsiteWidget-01a15ac0e75070008be2df10d42ef19033ae"></div>
 
 </body>
 <script src="config.js"></script>

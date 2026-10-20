@@ -99,3 +99,70 @@ function checkTime(i) {
   if (i < 10) { i = "0" + i };
   return i;
 }
+
+(async function() {
+  const CITY_NAME = "Graz";
+
+  try {
+    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(CITY_NAME)}&count=1&language=en&format=json`);
+    const geoData = await geoRes.json();
+
+    if (!geoData.results || geoData.results.length === 0) {
+      document.getElementById('w-city').textContent = "City not found";
+      return;
+    }
+
+    const { latitude, longitude, name, country } = geoData.results[0];
+
+    const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`);
+    const weatherData = await weatherRes.json();
+    const current = weatherData.current;
+    const daily = weatherData.daily;
+    const weatherMap = {
+          0: ["Clear sky", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`],
+          1: ["Mainly clear", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41"/><path d="M15.9 12A5 5 0 1 0 7 13.9a4 4 0 0 0-2 7.1h13a4.5 4.5 0 0 0 2.1-8.5 5 5 0 0 0-4.2-.5z"/></svg>`],
+          2: ["Partly cloudy", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41"/><path d="M15.9 12A5 5 0 1 0 7 13.9a4 4 0 0 0-2 7.1h13a4.5 4.5 0 0 0 2.1-8.5 5 5 0 0 0-4.2-.5z"/></svg>`],
+          3: ["Overcast", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`],
+          45: ["Foggy", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9h14M3 13h18M5 17h14"/></svg>`],
+          51: ["Light drizzle", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/><path d="M8 19v1M12 19v1M16 19v1"/></svg>`],
+          61: ["Slight rain", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 13a5 5 0 0 0-9-3 8 8 0 1 0-2.8 15.2"/><path d="M8 18v3M12 18v3M16 18v3"/></svg>`],
+          63: ["Rain", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 13a5 5 0 0 0-9-3 8 8 0 1 0-2.8 15.2"/><path d="M8 18v4M12 18v4M16 18v4"/></svg>`],
+          80: ["Showers", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 13a5 5 0 0 0-9-3 8 8 0 1 0-2.8 15.2"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/></svg>`],
+          95: ["Thunderstorm", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"/><path d="M13 11l-4 6h3l-1 5 4-6h-3l1-5z"/></svg>`]
+        };
+
+        const fallbackIcon = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`;
+
+        const [condition, iconSvg] = weatherMap[current.weather_code] || ["Cloudy", fallbackIcon];
+
+        document.getElementById('w-city').textContent = `${name}, ${country}`;
+        document.getElementById('w-condition').textContent = condition;
+        document.getElementById('w-temp').textContent = `${Math.round(current.temperature_2m)}°C`;
+        document.getElementById('w-icon').innerHTML = iconSvg;
+
+        const forecastContainer = document.getElementById('w-forecast');
+        forecastContainer.innerHTML = '';
+
+        for (let i = 1; i <= 3; i++) {
+          const dateObj = new Date(daily.time[i] + 'T00:00:00');
+          const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+          const maxTemp = Math.round(daily.temperature_2m_max[i]);
+          const minTemp = Math.round(daily.temperature_2m_min[i]);
+          const [_, daySvg] = weatherMap[daily.weather_code[i]] || ["", fallbackIcon];
+
+          const opacity = Math.max(0.3, 1 - (i * 0.25));
+
+          const rowHtml = `
+            <div class="forecast-row" style="opacity: ${opacity};">
+              <span class="forecast-day">${dayName}</span>
+              <span style="display: flex; align-items: center; scale: 0.75;">${daySvg}</span>
+              <span style="text-align: right;"><strong class="forecast-temps-max">${maxTemp}°</strong> <span class="forecast-temps-min">${minTemp}°</span></span>
+            </div>
+          `;
+          forecastContainer.insertAdjacentHTML('beforeend', rowHtml);
+        }
+
+  } catch (err) {
+    document.getElementById('w-city').textContent = "Unavailable";
+  }
+})();
