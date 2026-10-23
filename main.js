@@ -159,7 +159,7 @@ async function listUpcomingEvents() {
         'timeMin': now,
         'showDeleted': false,
         'singleEvents': true,
-        'maxResults': 20,
+        'maxResults': 15,
         'orderBy': 'startTime',
       }).then(res => (res.result.items || []).map(event => ({
         ...event,
