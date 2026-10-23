@@ -132,7 +132,7 @@ function checkAndAutoAuth() {
 function handleSignoutClick() {
   const token = gapi.client.getToken();
   if (token !== null) {
-    google.accounts.oauth2.revoke(token.acces_token, () => {
+    google.accounts.oauth2.revoke(token.access_token, () => {
       gapi.client.setToken('');
       document.getElementById('content').innerText = 'User signed out.';
       document.getElementById('signout_button').style.display = 'none';
