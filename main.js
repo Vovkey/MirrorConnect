@@ -26,6 +26,11 @@ document.onmousemove = (e) => {
   mouseY = e.clientY;
 };
 
+document.onmouseup = () => {
+  mouseDown.clock0 = false;
+  mouseDown.weather0 = false;
+  mouseDown.calender0 = false;
+}
 window.nodeGrab = function(target) {
   switch (target) {
     case 0:
@@ -41,19 +46,9 @@ window.nodeGrab = function(target) {
   }
 }
 
-window.nodeDrop = function(target) {
-  switch (target) {
-    case 0:
-      mouseDown.clock0 = false;
-      break;
-    case 1:
-      mouseDown.weather0 = false;
-      break;
-    case 2:
-      mouseDown.calender0 = false;
-      break;
-  }
-}
+window.nodeDrop = function (target) {
+
+};
 
 function updateClockPos() {
   if (mouseDown.clock0) {
@@ -100,6 +95,88 @@ function checkTime(i) {
   return i;
 }
 
+const CLIENT_ID = "237938526260-bvnnscqlb6qc22j0cd9m8if26h63vt1q.apps.googleusercontent.com";
+const API_KEY = 'AIzaSyA0Ixyy-fwYJqpm18toX9MAYTK-iJR1QmA';
+const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
+const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
+
+let tokenClient;
+let gapInited = false;
+let gitInited = false;
+
+function gapiLoaded() {
+  gapi.load('client', initializeGapiClient);
+}
+
+async function initializeGapiClient() {
+  await gapi.client.init({
+    apiKey: API_KEY,
+    discoveryDocs: [DISCOVERY_DOC],
+  });
+  gapiInited = true;
+  checkAndAutoAuth();
+}
+
+function gisLoaded() {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: async (resp) => {
+            if (resp.error !== undefined) {
+                document.getElementById('content').innerText = 'Authorization failed.';
+                return;
+            }
+            document.getElementById('signout_button').style.display = 'inline-block';
+            await listUpcomingEvents();
+        },
+    });
+    gisInited = true;
+    checkAndAutoAuth();
+}
+
+function checkAndAutoAuth() {
+  if (gapiInited && gisInited) {
+    tokenClient.requestAccessToken({ prompt: '' });
+  }
+}
+
+function handleSignoutClick() {
+  const token = gapi.client.getToken();
+  if (token !== null) {
+    google.accounts.oauth2.revoke(token.acces_token, () => {
+      gapi.client.setToken('');
+      document.getElementById('content').innerText = 'User signed out.';
+      document.getElementById('signout_button').style.display = 'none';
+    });
+  }
+}
+
+async function listUpcomingEvents() {
+  try {
+    const calendarListResponse = await gapi.client.calendar.calendarList.list();
+    const calendars = calendarListResponse.result.items;
+
+    if (!calendars || calendars.length === 0) {
+      document.getElementById('content').innerText = 'No calendars found.';
+      return;
+    }
+
+    const now = (new Date()).toISOString();
+    const eventPromises = calendars.map(cal => {
+      const bgColor = cal.backgroundColor || '#3f51b5';
+
+      return gapi.client.calendar.events.list({
+        'calendarId': cal.id,
+        'timeMin': now,
+      })
+    })
+  }
+}
+
+
+
+
+(async function() {
 (async function() {
   const CITY_NAME = "Graz";
 
@@ -131,7 +208,7 @@ function checkTime(i) {
           95: ["Thunderstorm", `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"/><path d="M13 11l-4 6h3l-1 5 4-6h-3l1-5z"/></svg>`]
         };
 
-        const fallbackIcon = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`;
+        const fallbackIcon = `<svg width="28" height="28" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`;
 
         const [condition, iconSvg] = weatherMap[current.weather_code] || ["Cloudy", fallbackIcon];
 

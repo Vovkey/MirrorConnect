@@ -35,10 +35,10 @@ body {
 .weather{
     color: white;
     position: absolute;
-    top: 15%;
-    left: 70%;
-    width: 500px;
-    height: 150px;
+    top: 0px;
+    left: 60%;
+    width: 400px;
+    height: 550px;
     background: #000000;
     cursor: pointer;
     display: flex;
@@ -123,7 +123,7 @@ border: 2px dashed lightslategray;
 
 .forecast-day {
     font-weight: 500;
-    width: 60px;
+    width: 40px;
 }
 
 .forecast-temp-max {
