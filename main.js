@@ -4,19 +4,10 @@ const mouseDown = {
   calender0: false,
 };
 
-const offset = {
-  clock0: [
-    document.getElementById('clock0').offsetWidth / 2,
-    document.getElementById('clock0').offsetHeight / 2,
-  ],
-  weather0: [
-    document.getElementById('weather0').offsetWidth / 2,
-    document.getElementById('weather0').offsetHeight / 2,
-  ],
-  calender0: [
-    document.getElementById('calender0').offsetWidth / 2,
-    document.getElementById('calender0').offsetHeight / 2,
-  ],
+const mouseOffset = {
+  clock0: { x: 0, y: 0 },
+  weather0: { x: 0, y: 0 },
+  calender0: { x: 0, y: 0 },
 };
 
 var mouseX, mouseY;
@@ -31,19 +22,17 @@ document.onmouseup = () => {
   mouseDown.weather0 = false;
   mouseDown.calender0 = false;
 }
-window.nodeGrab = function(target) {
-  switch (target) {
-    case 0:
-      mouseDown.clock0 = true;
-      break;
-    case 1:
-      mouseDown.weather0 = true;
-      break
-    case 2:
-      mouseDown.calender0 = true;
-      break;
+window.nodeGrab = function (target) {
+  const targetId = target === 0 ? 'clock0' : target === 1 ? 'weather0' : 'calender0';
+  const el = document.getElementById(targetId);
+  const rect = el.getBoundingClientRect();
 
-  }
+  mouseOffset[targetId].x = mouseX - rect.left;
+  mouseOffset[targetId].y = mouseY - rect.top;
+
+  if (target === 0) mouseDown.clock0 = true;
+  if (target === 1) mouseDown.weather0 = true;
+  if (target === 2) mouseDown.calender0 = true;
 }
 
 window.nodeDrop = function (target) {
@@ -52,29 +41,29 @@ window.nodeDrop = function (target) {
 
 function updateClockPos() {
   if (mouseDown.clock0) {
-    clock0.style.left = (mouseX - offset.clock0[0]) + 'px';
-    clock0.style.top = (mouseY - offset.clock0[1]) + 'px';
+    clock0.style.left = (mouseX - mouseOffset.clock0.x) + 'px';
+    clock0.style.top = (mouseY - mouseOffset.clock0.y) + 'px';
   }
   requestAnimationFrame(updateClockPos);
 }
 
 function updateWeatherPos() {
   if (mouseDown.weather0) {
-    weather0.style.left = (mouseX - offset.weather0[0]) + 'px';
-    weather0.style.top = (mouseY - offset.weather0[1]) + 'px';
+    weather0.style.left = (mouseX - mouseOffset.weather0.x) + 'px';
+    weather0.style.top = (mouseY - mouseOffset.weather0.y) + 'px';
   }
-  requestAnimationFrame(updateWeatherPos)
+  requestAnimationFrame(updateWeatherPos);
 }
 
 function updateCalenderPos() {
   if (mouseDown.calender0) {
-    calender0.style.left = (mouseX - offset.calender0[0]) + 'px';
-    calender0.style.top = (mouseY - offset.calender0[1]) + 'px';
+    calender0.style.left = (mouseX - mouseOffset.calender0.x) + 'px';
+    calender0.style.top = (mouseY - mouseOffset.calender0.y) + 'px';
   }
-  requestAnimationFrame(updateCalenderPos)
+  requestAnimationFrame(updateCalenderPos);
 }
 
-requestAnimationFrame(updateCalenderPos)
+requestAnimationFrame(updateCalenderPos);
 requestAnimationFrame(updateClockPos);
 requestAnimationFrame(updateWeatherPos);
 //
@@ -95,10 +84,10 @@ function checkTime(i) {
   return i;
 }
 
-const CLIENT_ID = "237938526260-bvnnscqlb6qc22j0cd9m8if26h63vt1q.apps.googleusercontent.com";
-const API_KEY = 'AIzaSyA0Ixyy-fwYJqpm18toX9MAYTK-iJR1QmA';
-const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
-const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
+const CLIENT_ID = CONFIG.CLIENT_ID;
+const API_KEY = CONFIG.API_KEY;
+const DISCOVERY_DOC = CONFIG.DISCOVERY_DOC;
+const SCOPES = CONFIG.SCOPES;
 
 let tokenClient;
 let gapInited = false;
@@ -168,15 +157,89 @@ async function listUpcomingEvents() {
       return gapi.client.calendar.events.list({
         'calendarId': cal.id,
         'timeMin': now,
-      })
-    })
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 20,
+        'orderBy': 'startTime',
+      }).then(res => (res.result.items || []).map(event => ({
+        ...event,
+        calendarName: cal.summary,
+        backgroundColor: bgColor
+      }))).catch(err => {
+        console.warn(`Could not fetch events for calendar: ${cal.summary}`, err);
+        return [];
+      });
+    });
+
+    const results = await Promise.all(eventPromises);
+
+    const allEvents = results.flat().sort((a, b) => {
+      const dateA = new Date(a.start.dateTime || a.start.date);
+      const dateB = new Date(b.start.dateTime || b.start.date);
+      return dateA - dateB;
+    });
+
+    if (allEvents.length === 0) {
+      document.getElementById('content').innerText = 'No upcoming events found.';
+      return;
+    }
+
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = '';
+
+    const groupedByDate = {};
+    allEvents.forEach(event => {
+      const rawDate = event.start.dateTime || event.start.Date;
+      const dateObj = new Date(rawDate);
+      const dateKey = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', weekday: 'short' }).toUpperCase();
+
+      if (!groupedByDate[dateKey]) {
+        groupedByDate[dateKey] = [];
+      }
+      groupedByDate[dateKey].push({ ...event, dateObj });
+    });
+
+    for (const [dateStr, events] of Object.entries(groupedByDate)) {
+      const dayGroup = document.createElement('div');
+      dayGroup.className = 'calendar-day-group';
+
+      const dateEl = document.createElement('div');
+      dateEl.className = 'calendar-date';
+      dateEl.innerText = dateStr;
+      dayGroup.appendChild(dateEl);
+
+      const eventsListEl = document.createElement('div');
+      eventsListEl.className = 'calendar-events-list';
+
+      events.forEach(event => {
+        let timeStr = 'All day';
+        if (event.start.dateTime) {
+          const startT = new Date(event.start.dateTime).toLocaleDateString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+          const endT = new Date(event.end.dateTime).toLocaleDateString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+          timeStr = `${startT} – ${endT}`;
+        }
+
+        const eventRow = document.createElement('div');
+        eventRow.className = 'event-row';
+
+        eventRow.innerHTML = `
+            <div class="event-dot" style="background-color: ${event.backgroundColor};"></div>
+            <div class="event-time">${timeStr}</div>
+            <div class="event-title">${event.summary}</div>
+        `;
+
+        eventsListEl.appendChild(eventRow);
+      });
+
+      dayGroup.appendChild(eventsListEl);
+      contentDiv.appendChild(dayGroup);
+    }
+
+  } catch (err) {
+    document.getElementById('content').innerText = err.message;
   }
 }
 
-
-
-
-(async function() {
 (async function() {
   const CITY_NAME = "Graz";
 

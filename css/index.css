@@ -56,19 +56,144 @@ border: 2px dashed lightslategray;
     position: absolute;
     top: 30%;
     left: 50%;
-    width: 200px;
-    height: 50px;
+    width: 28vw;
+    min-width: 350px;
+    max-width: 450px;
+    height: 750px;
     background: #000000;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    rotate: 90deg;
+    padding: 20px;
+
+    transform: rotate(90deg);
+    -webkit-font-smoothing: antialiased;
+    -moy-osx-font-smoothing: grayscale;
+    backface-visibility: hidden;
+
+    border: 2px solid transparent;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-.calender:hover{
-border: 2px dashed lightslategray;
+.calender::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
 }
+
+.calender:hover {
+    border: 2px dashed lightslategray;
+    scrollbar-width: thin;
+}
+
+.calender:hover::-webkit-scrollbar {
+    width: 4px;
+}
+
+.calender:hover::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 2px;
+}
+
+.calendar-wrapper-box {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #111111;
+    padding-bottom: 10px;
+}
+
+.calendar-header h3 {
+    font-size:16px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.calendar-header button {
+    background: #000000;
+    color: #ffffff;
+    border: 1px solid #333333;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none;
+}
+
+.calender:hover .calendar-header button {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.calendar-header button:hover {
+    background: #222;
+}
+
+.calendar-day-group {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #111;
+    align-items: flex-start;
+    font-size: 13px;
+}
+
+.calendar-date {
+    width: 110px;
+    font-weight: 500;
+    color: #777777;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.calendar-events-list {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.event-row {
+    display: flex;
+    align-items: center;
+}
+
+.event-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.event-time {
+    width: 120px;
+    color: #aaaaaa;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.event-title {
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 11px;
+    word-break: break-word;
+}
+
+#content {
+    color: #666666;
+    font-size: 13px;
+}
+
 
 #weather-card {
     background: #000000;
