@@ -22,7 +22,11 @@ document.onmouseup = () => {
   mouseDown.weather0 = false;
   mouseDown.calender0 = false;
 }
-window.nodeGrab = function (target) {
+window.nodeGrab = function (target, event) {
+
+  if (event && (event.target.tagName === 'BUTTON' || event.target.closest('button'))) {
+    return;
+  }
   const targetId = target === 0 ? 'clock0' : target === 1 ? 'weather0' : 'calender0';
   const el = document.getElementById(targetId);
   const rect = el.getBoundingClientRect();
@@ -189,7 +193,7 @@ async function listUpcomingEvents() {
 
     const groupedByDate = {};
     allEvents.forEach(event => {
-      const rawDate = event.start.dateTime || event.start.Date;
+      const rawDate = event.start.dateTime || event.start.date;
       const dateObj = new Date(rawDate);
       const dateKey = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', weekday: 'short' }).toUpperCase();
 
