@@ -215,15 +215,24 @@ async function listUpcomingEvents() {
       const eventsListEl = document.createElement('div');
       eventsListEl.className = 'calendar-events-list';
 
-      events.forEach(event => {
+   /*   events.forEach(event => {
         let timeStr = 'All day';
         if (event.start.dateTime) {
           const startT = new Date(event.start.dateTime).toLocaleDateString([], { hour: 'numeric', minute: '2-digit', hour12: true });
           const endT = new Date(event.end.dateTime).toLocaleDateString([], { hour: 'numeric', minute: '2-digit', hour12: true });
           timeStr = `${startT} – ${endT}`;
         }
+*/
 
-        const eventRow = document.createElement('div');
+        events.forEach(event => {
+        let timeStr = 'All day';
+        if (event.start.dateTime) {
+          const startT = new Date(event.start.dateTime).toLocaleDateString({ hour: 'numeric', minute: '2-digit', hour12: true });
+          const endT = new Date(event.end.dateTime).toLocaleDateString({ hour: 'numeric', minute: '2-digit', hour12: true });
+          timeStr = `${startT} – ${endT}`;
+        }
+
+      const eventRow = document.createElement('div');
         eventRow.className = 'event-row';
 
         eventRow.innerHTML = `
