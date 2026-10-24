@@ -93,9 +93,9 @@ const API_KEY = CONFIG.API_KEY;
 const DISCOVERY_DOC = CONFIG.DISCOVERY_DOC;
 const SCOPES = CONFIG.SCOPES;
 
-let tokenClient;
-let gapiInited = false;
-let gisInited = false;
+var tokenClient;
+var gapiInited = false;
+var gisInited = false;
 
 function gapiLoaded() {
   gapi.load('client', initializeGapiClient);
