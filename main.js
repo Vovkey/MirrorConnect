@@ -215,18 +215,9 @@ async function listUpcomingEvents() {
       const eventsListEl = document.createElement('div');
       eventsListEl.className = 'calendar-events-list';
 
-   /*   events.forEach(event => {
-        let timeStr = 'All day';
-        if (event.start.dateTime) {
-          const startT = new Date(event.start.dateTime).toLocaleDateString([], { h<our: 'numeric', minute: '2-digit', hour12: true });
-          const endT = new Date(event.end.dateTime).toLocaleDateString([], { hour: 'numeric', minute: '2-digit', hour12: true });
-          timeStr = `${startT} – ${endT}`;
-        }
-*/
-
         events.forEach(event => {
         let timeStr = 'All day';
-        if (event.start.dateTime) {
+        if (event.start.dateTime && event.end.dateTime) {
           const startT = new Date(event.start.dateTime).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
           const endT = new Date(event.end.dateTime).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
           timeStr = `${startT} – ${endT}`;
