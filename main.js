@@ -94,8 +94,8 @@ const DISCOVERY_DOC = CONFIG.DISCOVERY_DOC;
 const SCOPES = CONFIG.SCOPES;
 
 let tokenClient;
-let gapInited = false;
-let gitInited = false;
+let gapiInited = false;
+let gisInited = false;
 
 function gapiLoaded() {
   gapi.load('client', initializeGapiClient);
@@ -218,7 +218,7 @@ async function listUpcomingEvents() {
    /*   events.forEach(event => {
         let timeStr = 'All day';
         if (event.start.dateTime) {
-          const startT = new Date(event.start.dateTime).toLocaleDateString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+          const startT = new Date(event.start.dateTime).toLocaleDateString([], { h<our: 'numeric', minute: '2-digit', hour12: true });
           const endT = new Date(event.end.dateTime).toLocaleDateString([], { hour: 'numeric', minute: '2-digit', hour12: true });
           timeStr = `${startT} – ${endT}`;
         }
