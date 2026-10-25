@@ -83,7 +83,7 @@ requestAnimationFrame(updateWeatherPos);
 requestAnimationFrame(updateBusPos);
 
 
-function startClock() {
+function startTime() {
   const today = new Date();
   let h = today.getHours();
   let m = today.getMinutes();
@@ -91,7 +91,7 @@ function startClock() {
   m = checkTime(m);
   s = checkTime(s);
   document.getElementById('clock0').innerHTML = h + ":" + m + ":" + s;
-  setTimeout(startClock, 1000);
+  setTimeout(startTime, 1000);
 }
 
 function checkTime(i) {
@@ -99,7 +99,7 @@ function checkTime(i) {
   return i;
 }
 
-function startTimer() {
+/*function startTimer() {
   const today = new Date();
   let h0 = CONFIG.BUSTIME(0);
   let m0 = CONFIG.BUSTIME(1);
@@ -119,6 +119,7 @@ function startTimer() {
   document.getElementById('bus0').innerHTML = h2 + ':' + m2 + ':' + s2 + 'test';
   setTimeout(startTimer, 1000);
 }
+*/
 
 const CLIENT_ID = CONFIG.CLIENT_ID;
 const API_KEY = CONFIG.API_KEY;
@@ -196,7 +197,7 @@ async function listUpcomingEvents() {
         'showDeleted': false,
         'singleEvents': true,
         'maxResults': 15,
-        'orderBy': 'startClock',
+        'orderBy': 'startTime',
       }).then(res => (res.result.items || []).map(event => ({
         ...event,
         calendarName: cal.summary,
