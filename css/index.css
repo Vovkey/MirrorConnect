@@ -87,7 +87,7 @@ border: 2px dashed lightslategray;
 
     transform: rotate(90deg);
     -webkit-font-smoothing: antialiased;
-    -moy-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: grayscale;
     backface-visibility: hidden;
 
     border: 2px solid transparent;

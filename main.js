@@ -5,6 +5,13 @@ const mouseDown = {
   bus0: false,
 };
 
+window.addEventListener('mouseup', () => {
+  mouseDown.clock0 = false;
+  mouseDown.weather0 = false;
+  mouseDown.calender0 = false;
+  mouseDown.bus0 = false;
+});
+
 const mouseOffset = {
   clock0: { x: 0, y: 0 },
   weather0: { x: 0, y: 0 },
@@ -108,6 +115,30 @@ function startTime() {
 function checkTime(i) {
   if (i < 10) { i = "0" + i };
   return i;
+}
+
+function startTimer() {
+  const now = new Date();
+
+  let target = new Date();
+  target.setHours(6, 45, 0, 0);
+
+  if (now > target) {
+    target.setDate(target.getDate() + 1);
+  }
+
+  let diff = Math.floor((target - now) / 1000);
+
+  let h = Math.floor(diff / 3600);
+  let m = Math.floor((diff % 3600) / 60);
+  let s = diff % 60;
+
+  document.getElementById('bus1').innerHTML =
+    String(h).padStart(2, '0') + ':' +
+    String(m).padStart(2, '0') + ':' +
+    String(s).padStart(2, '0');
+
+  setTimeout(startTimer, 1000);
 }
 
 const CLIENT_ID = CONFIG.CLIENT_ID;
@@ -332,3 +363,9 @@ async function listUpcomingEvents() {
     document.getElementById('w-city').textContent = "Unavailable";
   }
 })();
+
+
+function initAll() {
+  startTime();
+  startTimer();
+}

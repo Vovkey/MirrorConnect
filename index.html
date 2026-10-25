@@ -6,7 +6,7 @@
 	<title>MirrorConnect</title>
 	<link rel='stylesheet' href="./css/index.css">
 </head>
-<body onload="startTime()">
+<body onload="initAll()">
 
     <div id="clock0" class="clock" onmousedown="nodeGrab(0, event)" onmouseup="nodeDrop(0)"></div>
 
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div id="bus0" class="bus" onmousedown="nodeGrab(3,event)" onmouseup="nodeDrop(3)">test</div>
+    <div id="bus0" class="bus" onmousedown="nodeGrab(3,event)" onmouseup="nodeDrop(3)"><div id="bus1"></div></div>
 
 
 <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
