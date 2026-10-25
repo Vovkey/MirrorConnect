@@ -278,7 +278,7 @@ async function listUpcomingEvents() {
 }
 
 (async function() {
-  const CITY_NAME = CONFIG.CITY;
+  const CITY_NAME = 'Graz';
 
   try {
     const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(CITY_NAME)}&count=1&language=en&format=json`);
