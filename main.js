@@ -21,13 +21,14 @@ document.onmouseup = () => {
   mouseDown.clock0 = false;
   mouseDown.weather0 = false;
   mouseDown.calender0 = false;
+  mouseDown.bus0 = false;
 }
 window.nodeGrab = function (target, event) {
 
   if (event && (event.target.tagName === 'BUTTON' || event.target.closest('button'))) {
     return;
   }
-  const targetId = target === 0 ? 'clock0' : target === 1 ? 'weather0' : 'calender0';
+  const targetId = target === 0 ? 'clock0' : target === 1 ? 'weather0' : target === 2 ? 'calender0' : 'bus0';
   const el = document.getElementById(targetId);
   const rect = el.getBoundingClientRect();
 
@@ -37,6 +38,7 @@ window.nodeGrab = function (target, event) {
   if (target === 0) mouseDown.clock0 = true;
   if (target === 1) mouseDown.weather0 = true;
   if (target === 2) mouseDown.calender0 = true;
+  if (target === 3) mouseDown.bus0 = true;
 }
 
 window.nodeDrop = function (target) {
@@ -65,14 +67,23 @@ function updateCalenderPos() {
     calender0.style.top = (mouseY - mouseOffset.calender0.y) + 'px';
   }
   requestAnimationFrame(updateCalenderPos);
+
+function updateBusPos() {
+  if (mouseDown.bus0) {
+    bus0.style.left = (mouseX - mouseOffset.bus0.x) + 'px';
+    bus0.style.top = (mouseY - mouseOffset.bus0.y) + 'px';
+  }
+  requestAnimationFrame(updateBusPos);
+}
 }
 
 requestAnimationFrame(updateCalenderPos);
 requestAnimationFrame(updateClockPos);
 requestAnimationFrame(updateWeatherPos);
-//
+requestAnimationFrame(updateBusPos);
 
-function startTime() {
+
+function startClock() {
   const today = new Date();
   let h = today.getHours();
   let m = today.getMinutes();
@@ -80,12 +91,33 @@ function startTime() {
   m = checkTime(m);
   s = checkTime(s);
   document.getElementById('clock0').innerHTML = h + ":" + m + ":" + s;
-  setTimeout(startTime, 1000);
+  setTimeout(startClock, 1000);
 }
 
 function checkTime(i) {
   if (i < 10) { i = "0" + i };
   return i;
+}
+
+function startTimer() {
+  const today = new Date();
+  let h0 = 6;
+  let m0 = 45;
+  let s0 = 0;
+
+  let h1 = today.getHours();
+  let m1 = today.getMinutes();
+  let s1 = today.getSeconds();
+  m0 = checkTime(m0);
+  m1 = checkTime(m1);
+  s0 = checkTime(s0);
+  s1 = checkTime(s1);
+
+  h2 = h0 - h1;
+  m2 = m0 - m1;
+  s2 = s0 - s1;
+  document.getElementById('bus0').innerHTML = h2 + ':' + m2 + ':' + s2 + 'test';
+  setTimeout(startTimer, 1000);
 }
 
 const CLIENT_ID = CONFIG.CLIENT_ID;
@@ -164,7 +196,7 @@ async function listUpcomingEvents() {
         'showDeleted': false,
         'singleEvents': true,
         'maxResults': 15,
-        'orderBy': 'startTime',
+        'orderBy': 'startClock',
       }).then(res => (res.result.items || []).map(event => ({
         ...event,
         calendarName: cal.summary,

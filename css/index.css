@@ -32,6 +32,27 @@ body {
     border: 2px dashed lightslategray;
 }
 
+.bus{
+    color: white;
+    font-size: 70px;
+    position: absolute;
+    bottom: 15%;
+    left: 80%;
+    width: 300px;
+    height: 80px;
+    background: #000000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    rotate: 90deg;
+}
+
+.bus:hover{
+    border: 2px dashed lightslategray;
+}
+
+
 .weather{
     color: white;
     position: absolute;
