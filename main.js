@@ -101,9 +101,9 @@ function checkTime(i) {
 
 function startTimer() {
   const today = new Date();
-  let h0 = 6;
-  let m0 = 45;
-  let s0 = 0;
+  let h0 = CONFIG.BUSTIME(0);
+  let m0 = CONFIG.BUSTIME(1);
+  let s0 = CONFIG.BUSTIME(2);
 
   let h1 = today.getHours();
   let m1 = today.getMinutes();
