@@ -21,7 +21,7 @@ Here's a quick rundown of the current widgets, if you don't want to go through t
   This was by far the most challenging widget. Even though, google offers an easy embedding feature for their calendar, I didn't use it, because it wasn't customizable at all. Instead, I created an entire google cloud web app with the OAuth screen and everything. I'm really happy with the minimalistic but yet so useful final product.
 
 4.  Bus Timer
-  This is just a simple timer for me in the morning to know at a glance in the mirror when I'll have to leave.
+  This is just a simple timer for me in the morning to know at a glance in the mirror when I'll have to leave. I'm thinking about adding a feature that it changes color or size depending on how much time i still have.
 
 P.S. Please don't mind the severe misspelling of calendar in my code.
 
