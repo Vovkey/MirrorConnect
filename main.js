@@ -75,7 +75,6 @@ function updateBusPos() {
   }
   requestAnimationFrame(updateBusPos);
 }
-}
 
 requestAnimationFrame(updateCalenderPos);
 requestAnimationFrame(updateClockPos);
