@@ -67,6 +67,7 @@ function updateCalenderPos() {
     calender0.style.top = (mouseY - mouseOffset.calender0.y) + 'px';
   }
   requestAnimationFrame(updateCalenderPos);
+}
 
 function updateBusPos() {
   if (mouseDown.bus0) {
