@@ -108,14 +108,14 @@ function startTimer() {
   let h1 = today.getHours();
   let m1 = today.getMinutes();
   let s1 = today.getSeconds();
-  m0 = checkTime(m0);
-  m1 = checkTime(m1);
-  s0 = checkTime(s0);
-  s1 = checkTime(s1);
 
   h2 = h0 - h1;
   m2 = m0 - m1;
   s2 = s0 - s1;
+
+  m2 = checkTime(m2)
+  s2 = checkTime(s2)
+
   document.getElementById('bus0').innerHTML = h2 + ':' + m2 + ':' + s2 + 'test';
   setTimeout(startTimer, 1000);
 }
