@@ -307,4 +307,35 @@ border: 2px dashed lightslategray;
 
 #clear:hover {
     border: 2px dashed lightslategray;
+    border-radius: 10px;
+}
+
+#add {
+    color:#333333;
+    font-size: 20px;
+    background-color: #000000;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 1%;
+    bottom: 1%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    rotate: 90deg;
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#add.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#add:hover {
+    border: 2px dashed lightslategray;
+    border-radius: 10px;
 }

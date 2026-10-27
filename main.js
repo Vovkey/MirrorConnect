@@ -377,6 +377,19 @@ window.addEventListener('mousemove', () => {
 
 });
 
+const element0 = document.getElementById('add');
+let timeout0;
+
+window.addEventListener('mousemove', () => {
+
+  element0.classList.add('show');
+  clearTimeout(timeout0);
+  timeout0 = setTimeout(() => {
+    element0.classList.remove('show')
+  }, 500);
+
+});
+
 function initAll() {
   startTime();
   startTimer();
