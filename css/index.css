@@ -69,7 +69,7 @@ body {
 }
 
 .weather:hover{
-border: 2px dashed ligh  tslategray;
+border: 2px dashed lightslategray;
 }
 
 .calender {
@@ -280,13 +280,13 @@ border: 2px dashed ligh  tslategray;
     margin-left: 4px;
 }
 
-#shutDownButton {
-    color:#666666;
+#clear {
+    color:#333333;
     font-size: 20px;
-    background-color: #ffffff;
+    background-color: #000000;
     position: absolute;
-    width: 90px;
-    height: 90px;
+    width: 50px;
+    height: 50px;
     left: 1%;
     top: 1%;
     cursor: pointer;
@@ -294,4 +294,17 @@ border: 2px dashed ligh  tslategray;
     align-items: center;
     justify-content: center;
     rotate: 90deg;
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#clear.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#clear:hover {
+    border: 2px dashed lightslategray;
 }

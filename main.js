@@ -364,9 +364,18 @@ async function listUpcomingEvents() {
   }
 })();
 
-function shutDown() {
+const element = document.getElementById('clear');
+let timeout;
 
-}
+window.addEventListener('mousemove', () => {
+
+  element.classList.add('show');
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    element.classList.remove('show')
+  }, 500);
+
+});
 
 
 
