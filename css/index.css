@@ -279,3 +279,19 @@ border: 2px dashed ligh  tslategray;
     color: #777777;
     margin-left: 4px;
 }
+
+#shutDownButton {
+    color:#666666;
+    font-size: 20px;
+    background-color: #ffffff;
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    left: 10%;
+    top: 10%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    rotate: 90deg;
+}
