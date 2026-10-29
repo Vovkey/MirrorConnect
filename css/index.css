@@ -462,3 +462,7 @@ border: 2px dashed lightslategray;
     accent-color: #333;
     cursor: pointer;
 }
+
+.hidden0 {
+  display: none !important;
+}

@@ -390,8 +390,11 @@ window.addEventListener('mousemove', () => {
 
 });
 
-function clear() {
-
+function clearScreen() {
+  const widgets = document.querySelectorAll('.widget');
+  widgets.forEach(widget => {
+    widget.classList.add('hidden0');
+  });
 }
 
 function initAll() {

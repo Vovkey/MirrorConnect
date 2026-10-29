@@ -8,10 +8,10 @@
 </head>
 <body onload="initAll()">
 
-    <div id="clock0" class="clock" onmousedown="nodeGrab(0, event)" onmouseup="nodeDrop(0)"></div>
+    <div id="clock0" class="clock widget hidden0" onmousedown="nodeGrab(0, event)" onmouseup="nodeDrop(0)"></div>
 
 
-    <div id="weather0" class="weather" onmousedown="nodeGrab(1, event)" onmouseup="nodeDrop(1)">
+    <div id="weather0" class="weather widget hidden0" onmousedown="nodeGrab(1, event)" onmouseup="nodeDrop(1)">
 
         <div id="weather-card">
           <div class="weather-header">
@@ -30,7 +30,7 @@
     </div>
 
 
-    <div id="calender0" class="calender" onmousedown="nodeGrab(2, event)" onmouseup="nodeDrop(2)">
+    <div id="calender0" class="calender widget hidden0" onmousedown="nodeGrab(2, event)" onmouseup="nodeDrop(2)">
         <div class="calendar-wrapper-box">
             <div class="calendar-header">
                 <h3>Upcoming Events</h3>
@@ -40,9 +40,9 @@
         </div>
     </div>
 
-    <div id="bus0" class="bus" onmousedown="nodeGrab(3,event)" onmouseup="nodeDrop(3)"><div id="bus1"></div></div>
+    <div id="bus0" class="bus widget hidden0" onmousedown="nodeGrab(3,event)" onmouseup="nodeDrop(3)"><div id="bus1"></div></div>
 
-    <button id="clear" class="hidden"><img src="./SVG/clear1.svg" height="30" width="30"></button>
+    <button id="clear" class="hidden" onclick="clearScreen()"><img src="./SVG/clear1.svg" height="30" width="30"></button>
     <button id="add" class="hidden" onclick="window.location.href='select.html';"><img src="./SVG/add1.svg" height="30" width="30"></button>
 
 
