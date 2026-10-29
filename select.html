@@ -6,7 +6,7 @@
 	<title>Select widgets</title>
 	<link rel='stylesheet' href="./css/index.css">
 </head>
-<body>
+<body onload="initSelected">
     <h1 class="header">Widget Select</h1>
 
     <div class="menu">
@@ -15,14 +15,14 @@
                     <div class="widgetHeader">Clock</div>
                     <div class="widgetText">Display time</div>
             </div>
-            <input type="checkbox" class="widgetCheckbox">
+            <input type="checkbox" class="widgetCheckbox" data-widget="clock0">
         </div>
         <div class="widgetSelect">
             <div>
                     <div class="widgetHeader">Weather</div>
                     <div class="widgetText">Displays weather</div>
             </div>
-            <input type="checkbox" class="widgetCheckbox">
+            <input type="checkbox" class="widgetCheckbox" data-widget="weather0">
         </div>
     </div>
 

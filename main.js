@@ -397,7 +397,45 @@ function clearScreen() {
   });
 }
 
+function initSelect() {
+  const checkboxes = document.querySelectorAll('.widgetCheckbox');
+
+  checkboxes.forEach(checkbox => {
+    const widgetId = checkbox.getAttribute('data-widget');
+
+    const isChecked = localStorage.getItem(widgetId) === 'true';
+    checkbox.checked = isChecked;
+
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(widgetId, checkbox.checked);
+    });
+  });
+}
+
+function loadWidgets() {
+  const widgetIds = ['clock0', 'weather0', 'calender0', 'bus0'];
+
+  widgetIds.forEach(id => {
+    const widgetEl = document.getElementById(id);
+    if (!widgetEl) return;
+
+    const isVisible = localStorage.getItem(id) === 'true'
+
+    if (isVisible) {
+       widgetEl.classList.remove('hidden0')
+    } else {
+      widgetEl.classList.add('hidden0')
+    }
+
+  })
+}
+
+
+
+
+
 function initAll() {
   startTime();
   startTimer();
+  loadWidgets();
 }
