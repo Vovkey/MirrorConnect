@@ -47,6 +47,7 @@ h1 {
 
 .clock:hover{
     border: 2px dashed lightslategray;
+    border-radius: 10px;
 }
 
 .bus{
@@ -67,6 +68,7 @@ h1 {
 
 .bus:hover{
     border: 2px dashed lightslategray;
+    border-radius: 10px;
 }
 
 
@@ -87,6 +89,7 @@ h1 {
 
 .weather:hover{
 border: 2px dashed lightslategray;
+border-radius: 10px;
 }
 
 .calender {
@@ -120,6 +123,7 @@ border: 2px dashed lightslategray;
 .calender:hover {
     border: 2px dashed lightslategray;
     scrollbar-width: thin;
+    border-radius: 10px;
 }
 
 .calender:hover::-webkit-scrollbar {
