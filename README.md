@@ -8,6 +8,8 @@ Currently, for development im hosting it on nest. So if you want to demo it, eit
 
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+Press the shutdown button in the bottom left to clear all widgets off of the screen. Press the plus sign in the bottom right to add and remove widgets. 
+
 Here's a quick rundown of the current widgets, if you don't want to go through the trouble of demoing it.
 
 1.  Clock
@@ -22,6 +24,7 @@ Here's a quick rundown of the current widgets, if you don't want to go through t
 
 4.  Bus Timer
   This is just a simple timer for me in the morning to know at a glance in the mirror when I'll have to leave. It gets bigger and more red the closer the set time gets.
+
 
 P.S. Please don't mind the severe misspelling of calendar in my code.
 
