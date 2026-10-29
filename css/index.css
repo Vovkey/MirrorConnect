@@ -384,10 +384,10 @@ border: 2px dashed lightslategray;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px;
     width: 90vh;
-    height: 90vw;
+    height: 80vw;
     margin: auto;
     position: absolute;
     top: 0;
@@ -395,20 +395,46 @@ border: 2px dashed lightslategray;
     left: 0;
     right: 0;
     rotate: 90deg;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.menu::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.menu:hover {
+    scrollbar-width: thin;
+}
+
+.menu:hover::-webkit-scrollbar {
+    width: 4px;
+}
+
+.menu:hover::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 2px;
 }
 
 .widgetSelect {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
     flex: 1 1 200px;
     min-width: 150px;
     height: 150px;
-    background: #111111;
+    background: #111;
     color: white;
     border: 1px solid #333;
     border-radius: 8px;
-    display: flex;
-    font-size: 24px;
+    padding: 16px;
     cursor: pointer;
     transition: border-color 0.2s ease;
+    user-select: none;
 }
 
 .widgetSelect:hover {
@@ -416,12 +442,23 @@ border: 2px dashed lightslategray;
 }
 
 .widgetHeader {
-    padding: 15px;
-    align-self: top;
+    padding: 16px;
+    font-weight: 500;
     color: #B6D1D2;
-    width: 100px
 }
 
 .widgetText {
-    padding: 15px;
+    padding: 12px;
+    color: #888;
+}
+
+.widgetCheckbox {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    accent-color: #333;
+    cursor: pointer;
 }
