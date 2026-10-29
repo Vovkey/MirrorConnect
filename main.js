@@ -127,16 +127,33 @@ function startTimer() {
     target.setDate(target.getDate() + 1);
   }
 
-  let diff = Math.floor((target - now) / 1000);
+  let diff = Math.max(0, Math.floor((target - now) / 1000));
 
   let h = Math.floor(diff / 3600);
   let m = Math.floor((diff % 3600) / 60);
   let s = diff % 60;
 
-  document.getElementById('bus1').innerHTML =
-    String(h).padStart(2, '0') + ':' +
-    String(m).padStart(2, '0') + ':' +
-    String(s).padStart(2, '0');
+  const busEl = document.getElementById('bus0');
+  const bus1 = document.getElementById('bus1');
+
+  if (bus1) {
+    bus1.innerHTML =
+      String(h).padStart(2, '0') + ':' +
+      String(m).padStart(2, '0') + ':' +
+      String(s).padStart(2, '0');
+  }
+
+  if (busEl) {
+    const maxTime = 1800;
+    const ratio = Math.max(0, Math.min(1, diff / maxTime));
+    const intensity = 1 - ratio;
+
+    const baseFontSize = 20 + (intensity * 50);
+    busEl.style.fontSize = baseFontSize + 'px';
+
+    const greenBlueVal = Math.round(255 * (1 - intensity));
+    busEl.style.color = `rgb(255, ${greenBlueVal}, ${greenBlueVal})`;
+  }
 
   setTimeout(startTimer, 1000);
 }
