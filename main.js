@@ -390,6 +390,10 @@ window.addEventListener('mousemove', () => {
 
 });
 
+function clear() {
+
+}
+
 function initAll() {
   startTime();
   startTimer();
