@@ -456,7 +456,7 @@ border: 2px dashed lightslategray;
     position: absolute;
     right: 16px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%), scale(1.5);
     width: 20px;
     height: 20px;
     accent-color: #333;

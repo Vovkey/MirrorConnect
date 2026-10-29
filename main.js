@@ -141,10 +141,10 @@ function startTimer() {
   setTimeout(startTimer, 1000);
 }
 
-const CLIENT_ID = CONFIG.CLIENT_ID;
-const API_KEY = CONFIG.API_KEY;
-const DISCOVERY_DOC = CONFIG.DISCOVERY_DOC;
-const SCOPES = CONFIG.SCOPES;
+const CLIENT_ID = (typeof CONFIG !== 'undefined') ? CONFIG.CLIENT_ID : '';
+const API_KEY = (typeof CONFIG !== 'undefined') ? CONFIG.API_KEY : '';
+const DISCOVERY_DOC = (typeof CONFIG !== 'undefined') ? CONFIG.DISCOVERY_DOC : '';
+const SCOPES = (typeof CONFIG !== 'undefined') ? CONFIG.SCOPES : '';
 
 var tokenClient;
 var gapiInited = false;
@@ -297,7 +297,10 @@ async function listUpcomingEvents() {
   }
 }
 
-(async function() {
+(async function () {
+  const wCity = document.getElementById('w-city');
+  if (!wCity) return;
+
   const CITY_NAME = 'Graz';
 
   try {
@@ -367,28 +370,28 @@ async function listUpcomingEvents() {
 const element = document.getElementById('clear');
 let timeout;
 
-window.addEventListener('mousemove', () => {
-
-  element.classList.add('show');
-  clearTimeout(timeout);
-  timeout = setTimeout(() => {
-    element.classList.remove('show')
-  }, 500);
-
-});
+if (element) {
+    window.addEventListener('mousemove', () => {
+        element.classList.add('show');
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            element.classList.remove('show');
+        }, 500);
+    });
+}
 
 const element0 = document.getElementById('add');
 let timeout0;
 
-window.addEventListener('mousemove', () => {
-
-  element0.classList.add('show');
-  clearTimeout(timeout0);
-  timeout0 = setTimeout(() => {
-    element0.classList.remove('show')
-  }, 500);
-
-});
+if (element0) {
+    window.addEventListener('mousemove', () => {
+        element0.classList.add('show');
+        clearTimeout(timeout0);
+        timeout0 = setTimeout(() => {
+            element0.classList.remove('show');
+        }, 500);
+    });
+}
 
 function clearScreen() {
   const widgets = document.querySelectorAll('.widget');
@@ -429,10 +432,6 @@ function loadWidgets() {
 
   })
 }
-
-
-
-
 
 function initAll() {
   startTime();
