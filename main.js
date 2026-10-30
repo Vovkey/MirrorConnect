@@ -3,6 +3,7 @@ const mouseDown = {
   weather0: false,
   calender0: false,
   bus0: false,
+  tamagotchi0: false,
 };
 
 window.addEventListener('mouseup', () => {
@@ -10,6 +11,7 @@ window.addEventListener('mouseup', () => {
   mouseDown.weather0 = false;
   mouseDown.calender0 = false;
   mouseDown.bus0 = false;
+  mouseDown.tamagotchi0 = false;
 });
 
 const mouseOffset = {
@@ -17,6 +19,7 @@ const mouseOffset = {
   weather0: { x: 0, y: 0 },
   calender0: { x: 0, y: 0 },
   bus0: { x: 0, y: 0 },
+  tamagotchi0: { x: 0, y: 0},
 };
 
 var mouseX, mouseY;
@@ -31,13 +34,14 @@ document.onmouseup = () => {
   mouseDown.weather0 = false;
   mouseDown.calender0 = false;
   mouseDown.bus0 = false;
+  mouseDown.tamagotchi0 = false;
 }
 
 window.nodeGrab = function (target, event) {
   if (event && (event.target.tagName === 'BUTTON' || event.target.closest('button'))) {
     return;
   }
-  const targetId = target === 0 ? 'clock0' : target === 1 ? 'weather0' : target === 2 ? 'calender0' : 'bus0';
+  const targetId = target === 0 ? 'clock0' : target === 1 ? 'weather0' : target === 2 ? 'calender0' : target === 3 ? 'bus0' : 'tamagotchi0';
   const el = document.getElementById(targetId);
   const rect = el.getBoundingClientRect();
 
@@ -55,6 +59,7 @@ window.nodeGrab = function (target, event) {
   if (target === 1) mouseDown.weather0 = true;
   if (target === 2) mouseDown.calender0 = true;
   if (target === 3) mouseDown.bus0 = true;
+  if (target === 4) mouseDown.tamagotchi0 = true;
 }
 
 window.nodeDrop = function (target) {
@@ -96,10 +101,20 @@ function updateBusPos() {
   requestAnimationFrame(updateBusPos);
 }
 
+function updateTamagotchiPos() {
+  if (mouseDown.tamagotchi0) {
+    const el = document.getElementById('tamagotchi0');
+    el.style.left = (mouseX - mouseOffset.tamagotchi0.x) + 'px';
+    el.style.top = (mouseY - mouseOffset.tamagotchi0.y) + 'px';
+  }
+  requestAnimationFrame(updateTamagotchiPos);
+}
+
 requestAnimationFrame(updateCalenderPos);
 requestAnimationFrame(updateClockPos);
 requestAnimationFrame(updateWeatherPos);
 requestAnimationFrame(updateBusPos);
+requestAnimationFrame(updateTamagotchiPos);
 
 function startTime() {
   const today = new Date();
