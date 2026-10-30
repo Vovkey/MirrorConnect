@@ -25,6 +25,9 @@ Here's a quick rundown of the current widgets, if you don't want to go through t
 4.  Bus Timer
   This is just a simple timer for me in the morning to know at a glance in the mirror when I'll have to leave. It gets bigger and more red the closer the set time gets.
 
+5. Tamagotchi
+  This is a cute little pal (gif in development) that's just there to look cute. (my gf wanted me to add this).
+
 
 P.S. Please don't mind the severe misspelling of calendar in my code.
 

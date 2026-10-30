@@ -62,9 +62,6 @@ window.nodeGrab = function (target, event) {
   if (target === 4) mouseDown.tamagotchi0 = true;
 }
 
-window.nodeDrop = function (target) {
-};
-
 function updateClockPos() {
   if (mouseDown.clock0) {
     const el = document.getElementById('clock0');
@@ -448,7 +445,7 @@ function initSelect() {
 }
 
 function loadWidgets() {
-  const widgetIds = ['clock0', 'weather0', 'calender0', 'bus0'];
+  const widgetIds = ['clock0', 'weather0', 'calender0', 'bus0', 'tamagotchi0'];
 
   widgetIds.forEach(id => {
     const widgetEl = document.getElementById(id);

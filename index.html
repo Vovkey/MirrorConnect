@@ -40,9 +40,16 @@
         </div>
     </div>
 
-    <div id="bus0" class="bus widget hidden0" onmousedown="nodeGrab(3,event)" onmouseup="nodeDrop(3)"><div id="bus1"></div></div>
+    <div id="bus0" class="bus widget hidden0" onmousedown="nodeGrab(3,event)" onmouseup="nodeDrop(3)">
+        <div id="bus1"></div>
+    </div>
 
-    <div id="tamagotchi0" class="tamagotchi widget hidden0" onmousedown="nodeGrab(4, event)" onmouseup="nodeDrop(4)"><img src="tamagotchi.gif" alt="Tamagotchi"></div>
+    <div id="tamagotchi0" class="tamagotchi widget" onmousedown="nodeGrab(4, event)" onmouseup="nodeDrop(4)">
+        <div class="tamagotchi-inner">
+            <span>test</span>
+            <img id="gif0" src="./images/sheen.gif" alt="Tamagotchi" style="width:48px;height:48px;">
+        </div>
+    </div>
 
     <button id="clear" class="hidden" onclick="clearScreen()"><img src="./SVG/clear1.svg" height="30" width="30"></button>
     <button id="add" class="hidden" onclick="window.location.href='select.html';"><img src="./SVG/add1.svg" height="30" width="30"></button>
