@@ -113,20 +113,65 @@ requestAnimationFrame(updateWeatherPos);
 requestAnimationFrame(updateBusPos);
 requestAnimationFrame(updateTamagotchiPos);
 
+
 function startTime() {
   const today = new Date();
   let h = today.getHours();
   let m = today.getMinutes();
   let s = today.getSeconds();
+  let date = today.getDate();
+  let day = today.getDay();
+  let month = today.getMonth();
   m = checkTime(m);
   s = checkTime(s);
-  document.getElementById('clock0').innerHTML = h + ":" + m + ":" + s;
+  day = weekday(day);
+  month =
+  document.getElementById('clock1').innerHTML = h + ":" + m + ":" + s;
+  document.getElementById('clock2').innerHTML = day + ' ' + month + ' ' + date;
   setTimeout(startTime, 1000);
 }
 
 function checkTime(i) {
   if (i < 10) { i = "0" + i };
   return i;
+}
+
+function weekday(i) {
+  if (i = 1) {
+    return 'mon';
+  } else if (i = 2) {
+    return 'tue';
+  } else if (i = 3) {
+    return 'wed';
+  } else if (i = 4) {
+    return 'thu';
+  } else if (i = 5) {
+    return 'fri';
+  } else if (i = 6) {
+    return 'sat';
+  } else if (i = 7) {
+    return 'sun';
+  }
+}
+
+function whichMonth(i) {
+  if (i = 1) {
+    return 'Feb';
+  } else if (i = 2) {
+    return 'Mar';
+  } else if (i = 3) {
+    return 'Apr';
+  } else if (i = 4) {
+    return 'May';
+  } else if (i = 5) {
+    return 'Jun';
+  } else if (i = 6) {
+    return 'Jul';
+  } else if (i = 7) {
+    return 'Aug';
+  } else if (i = 8) {
+    return 'S';
+  }
 }
 
 function startTimer() {
