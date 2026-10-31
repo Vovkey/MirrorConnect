@@ -27,6 +27,9 @@ Here's a quick rundown of the current widgets, if you don't want to go through t
 5. Tamagotchi
   This is a cute little pal (gif in development) that's just there to look cute. (my gf wanted me to add this).
 
+6. Pollen
+  Uses the same API as the weather widget to display the current pollen count and Air Quality Index.
+
 
 P.S. Please don't mind the severe misspelling of calendar in my code.
 
