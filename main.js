@@ -4,6 +4,7 @@ const mouseDown = {
   calender0: false,
   bus0: false,
   tamagotchi0: false,
+  pollen0: false,
 };
 
 window.addEventListener('mouseup', () => {
@@ -12,6 +13,7 @@ window.addEventListener('mouseup', () => {
   mouseDown.calender0 = false;
   mouseDown.bus0 = false;
   mouseDown.tamagotchi0 = false;
+  mouseDown.pollen0 = false;
 });
 
 const mouseOffset = {
@@ -19,7 +21,8 @@ const mouseOffset = {
   weather0: { x: 0, y: 0 },
   calender0: { x: 0, y: 0 },
   bus0: { x: 0, y: 0 },
-  tamagotchi0: { x: 0, y: 0},
+  tamagotchi0: { x: 0, y: 0 },
+  pollen0: { x: 0, y: 0},
 };
 
 var mouseX, mouseY;
@@ -35,13 +38,14 @@ document.onmouseup = () => {
   mouseDown.calender0 = false;
   mouseDown.bus0 = false;
   mouseDown.tamagotchi0 = false;
+  mouseDown.pollen0 = false;
 }
 
 window.nodeGrab = function (target, event) {
   if (event && (event.target.tagName === 'BUTTON' || event.target.closest('button'))) {
     return;
   }
-  const targetId = target === 0 ? 'clock0' : target === 1 ? 'weather0' : target === 2 ? 'calender0' : target === 3 ? 'bus0' : 'tamagotchi0';
+  const targetId = target === 0 ? 'clock0' : target === 1 ? 'weather0' : target === 2 ? 'calender0' : target === 3 ? 'bus0' : target === 4 ? 'tamagotchi0' : 'pollen0';
   const el = document.getElementById(targetId);
   const rect = el.getBoundingClientRect();
 
@@ -60,6 +64,7 @@ window.nodeGrab = function (target, event) {
   if (target === 2) mouseDown.calender0 = true;
   if (target === 3) mouseDown.bus0 = true;
   if (target === 4) mouseDown.tamagotchi0 = true;
+  if (target === 5) mouseDown.pollen0 = true;
 }
 
 function updateClockPos() {
@@ -107,11 +112,21 @@ function updateTamagotchiPos() {
   requestAnimationFrame(updateTamagotchiPos);
 }
 
+function updatePollenPos() {
+  if (mouseDown.pollen0) {
+    const el = document.getElementById('pollen0');
+    el.style.left = (mouseX - mouseOffset.pollen0.x) + 'px';
+    el.style.top = (mouseY - mouseOffset.pollen0.y) + 'px';
+  }
+  requestAnimationFrame(updatePollenPos);
+}
+
 requestAnimationFrame(updateCalenderPos);
 requestAnimationFrame(updateClockPos);
 requestAnimationFrame(updateWeatherPos);
 requestAnimationFrame(updateBusPos);
 requestAnimationFrame(updateTamagotchiPos);
+requestAnimationFrame(updatePollenPos);
 
 
 function startTime() {
@@ -125,7 +140,7 @@ function startTime() {
   m = checkTime(m);
   s = checkTime(s);
   day = weekday(day);
-  month =
+  month = whichMonth(month);
   document.getElementById('clock1').innerHTML = h + ":" + m + ":" + s;
   document.getElementById('clock2').innerHTML = day + ' ' + month + ' ' + date;
   setTimeout(startTime, 1000);
@@ -170,7 +185,15 @@ function whichMonth(i) {
   } else if (i = 7) {
     return 'Aug';
   } else if (i = 8) {
-    return 'S';
+    return 'Sep';
+  } else if (i = 9) {
+    return 'Oct';
+  } else if (i = 10) {
+    return 'Nov';
+  } else if (i = 11) {
+    return 'Dec';
+  } else if (i = 0) {
+    return 'Jan';
   }
 }
 
@@ -441,6 +464,68 @@ async function listUpcomingEvents() {
   }
 })();
 
+async function loadPollen() {
+  const pCity = document.getElementById('p-city');
+  if (!pCity) return;
+
+  const CITY_NAME = 'Graz';
+
+  try {
+    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(CITY_NAME)}&count=1&language=en&format=json`);
+    const geoData = await geoRes.json();
+
+    if (!geoData.results || geoData.results.length === 0) {
+      pCity.textContent = "City not found";
+      return;
+    }
+
+    const { latitude, longitude, name, country } = geoData.results[0];
+
+    const pollenRes = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=birch_pollen,grass_pollen,european_aqi`);
+    const pollenData = await pollenRes.json();
+    const current = pollenData.current;
+
+    pCity.textContent = `${name}, ${country}`;
+
+    const birchEl = document.getElementById('p-birch');
+    if (birchEl) {
+      birchEl.textContent = `Birch: ${current.birch_pollen ?? 0} grains/m³`;
+    }
+
+    const grassEl = document.getElementById('p-grass');
+    if (grassEl) {
+      grassEl.textContent = `Grass: ${current.grass_pollen ?? 0} grains/m³`
+    }
+
+    aqi = aqiMap(current.european_aqi)
+
+    const aqiEl = document.getElementById('p-aqi');
+    if (aqiEl) {
+      aqiEl.textContent = `Air quality: ${aqi}`
+    }
+  }
+  catch (err) {
+    pCity.textContent = "Unavailable";
+  }
+
+}
+
+function aqiMap(i) {
+  if (0 <= i <= 20) {
+    return 'good';
+  } else if (20 < i <= 40) {
+    return 'fair';
+  } else if (40 < i <= 60) {
+    return 'moderate';
+  } else if (60 < i <= 80) {
+    return 'poor';
+  } else if (80 < i <= 100) {
+    return 'very poor';
+  } else if (100 < i) {
+    return 'extremely poor';
+  }
+}
+
 const element = document.getElementById('clear');
 let timeout;
 
@@ -490,7 +575,7 @@ function initSelect() {
 }
 
 function loadWidgets() {
-  const widgetIds = ['clock0', 'weather0', 'calender0', 'bus0', 'tamagotchi0'];
+  const widgetIds = ['clock0', 'weather0', 'calender0', 'bus0', 'tamagotchi0', 'pollen0'];
 
   widgetIds.forEach(id => {
     const widgetEl = document.getElementById(id);
@@ -511,4 +596,5 @@ function initAll() {
   startTime();
   startTimer();
   loadWidgets();
+  loadPollen();
 }

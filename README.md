@@ -13,8 +13,7 @@ Press the shutdown button in the bottom left to clear all widgets off of the scr
 Here's a quick rundown of the current widgets, if you don't want to go through the trouble of demoing it.
 
 1.  Clock
-  This is just a basic clock. Nothing more, nothing less. Just tells the time.
-  Thinking about adding the weekday and the date aswell, but not right now.
+  This shows the time and date. Just pretty simple.
 
 2.  Weather
   This is a weather widget. It displays the temperature and the weather for today and the forecast for the next few days. I'm really proud of the fading effect at the bottom. 
